@@ -271,7 +271,7 @@ static double rbj_kt (unsigned int k, unsigned int t)
 }
 
 
-/* finding the optimal values for (q) and (s) (maximum) is impractical.
+/* finding asymptotically optimal values for (q) and (s) is impractical.
  * Burthe suggests the default values as reasonable choices, beyond which
  * the extra effort yields no significant improvement in the estimate. */
 
