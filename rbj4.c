@@ -45,7 +45,7 @@ static uint32_t sprp_bases (uint32_t n)
      * S(n) / (n - 1) should not be added to the composite running sum.
      * for a prime (p) : S(p) / (p - 1) = (1). */
 
-    if ((pf = (uint32_t) sp_factor(n, pbuf)) == 1)
+    if ((pf = (uint32_t) sp_factor(pbuf, n)) == 1)
         return (0);
 
     /* prime vs. distinct prime factorization: */

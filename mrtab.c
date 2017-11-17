@@ -200,7 +200,7 @@ static double rbj_ktm (double rk, double rt, double rm)
         jd = exp2((rk - 1.0) / rj) - 1.0;
         jn = exp2(rj - rm - 2.0);
 
-        if ((js = jn * jd) < rs)
+        if ((js = jd * jn) < rs)
             rs = js; /* maximum (s). */
 
         jn = ceil(1.0 / (2.0 * jn)) - 1.0;
@@ -260,7 +260,7 @@ static double rbj_kt (unsigned int k, unsigned int t)
         }
 
         r0 *= 0.5 * (exp2(rt * rq) - 1.0);
-        r0 += exp2( - (rt * mi + 2.0));
+        r0 += exp2(- (rt * mi + 2.0));
 
         p1 = 0.71867 / rk;
         if ((r0 /= (r0 + p1)) < rp) /* new 'M' candidate: */
@@ -391,9 +391,8 @@ int main (int argc, char **argv)
     }
 
     pmax = exp2(- (double) s);
-
-    fprintf(stdout, "k from t = 2 (k > 16) s.t. ");
-    fprintf(stdout, "p(k, t) <= 2^-%u (%.2e) :\n", s, pmax);
+    fprintf(stdout, "k from t = 2 (k > 16) s.t. "
+            "p(k, t) <= 2^-%u (%.2e) :\n", s, pmax);
 
 
     /* find kmax s.t. p(kmax, 1) <= (2^-s). kmax must be greater than,

@@ -80,7 +80,7 @@ int main (void)
      * the overwhelming majority of composite candidates, prior to
      * the independent M-R trials with randomized (a-SPRP) bases. */
 
-    fprintf(stdout, "frequency of 2-SPRP composites:\n\n");
+    fprintf(stdout, "frequency of 2-SPRP strong liars:\n\n");
 
     for (unsigned int k = 4; k <= (24); k++)
     {
@@ -88,10 +88,11 @@ int main (void)
 
         for (c = 0, s = 0, n = (nmax >> 1) + 1; n < nmax; n += 2)
         {
-            if (is_prime(n)) continue;
-
-            c++; /* (composites) */
-            s += (sprp(n, 2) != 0); /* (2-SPRP composites) */
+            if (!is_prime(n))
+            {
+                c++; /* (composite) */
+                s += (sprp(n, 2) != 0); /* 2-SPRP strong liar. */
+            }
         }
 
         fprintf(stdout, "%2u : %2"PRIu32" / %7"PRIu32"\n", k, s, c);

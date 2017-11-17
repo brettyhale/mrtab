@@ -8,8 +8,8 @@
 
 /******************************************************************************/
 
-#ifndef _SP_LUT_H
-#define _SP_LUT_H
+#ifndef SP_LUT_H
+#define SP_LUT_H
 
 #include <stdint.h>
 
@@ -94,7 +94,7 @@ static const uint16_t sp_lut[] =
 
 /******************************************************************************/
 
-static inline unsigned int sp_factor (uint32_t n, uint32_t p[])
+static inline unsigned int sp_factor (uint32_t p[], uint32_t n)
 {
     uint32_t q, sp = sp_lut[0];
     unsigned int np = 1;
@@ -117,4 +117,4 @@ static inline unsigned int sp_factor (uint32_t n, uint32_t p[])
 
 /******************************************************************************/
 
-#endif /* _SP_LUT_H */
+#endif /* SP_LUT_H */
