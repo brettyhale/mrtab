@@ -35,8 +35,7 @@ static uint32_t ugcd (uint32_t u, uint32_t v)
 
 static uint32_t sprp_bases (uint32_t n)
 {
-    uint32_t pf, pbuf[(24)], ubuf[(24)];
-    uint32_t sn, un, vn, wn, p, i;
+    uint32_t pbuf[(24)], pn, sn, un, vn, wn, p, i;
 
     /* assert(n > 1 && n < (UINT32_C(1) << (24))); */
     /* assert((n & 0x1) != 0); */
@@ -45,23 +44,22 @@ static uint32_t sprp_bases (uint32_t n)
      * S(n) / (n - 1) should not be added to the composite running sum.
      * for a prime (p) : S(p) / (p - 1) = (1). */
 
-    if ((pf = (uint32_t) sp_factor(pbuf, n)) == 1)
+    if ((pn = (uint32_t) sp_factor(pbuf, n)) == 1)
         return (0);
 
     /* prime vs. distinct prime factorization: */
 
-    wn = 1, ubuf[0] = (p = pbuf[0]);
-    for (i = 1; i < pf; i++)
+    for (wn = 1, p = pbuf[0], i = 1; i < pn; i++)
     {
         uint32_t pi = pbuf[i];
-        if (pi != p) ubuf[wn++] = (p = pi);
+        if (pi != p) pbuf[wn++] = (p = pi);
     }
 
     /* Monier's formula for S(n) : */
 
     for (vn = (24), i = 0; vn > 1 && i < wn; i++)
     {
-        uint32_t pi = ubuf[i], vi = 0;
+        uint32_t pi = pbuf[i], vi = 0;
         do pi >>= 1, vi++; while ((pi & 0x1) == 0);
         if (vi < vn) vn = vi;
     }
@@ -73,7 +71,7 @@ static uint32_t sprp_bases (uint32_t n)
      * of gcd(p - 1, u(n)) over the unique prime factors (p) of (n). */
 
     for (un = n >> 1; (un & 0x1) == 0; un >>= 1);
-    for (i = 0; i < wn; i++) sn *= ugcd(un, ubuf[i] - 1);
+    for (i = 0; i < wn; i++) sn *= ugcd(un, pbuf[i] - 1);
 
     return sn;
 }
