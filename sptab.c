@@ -2,7 +2,7 @@
 
 /* small prime LUT generator for trial division [HAC.4.4.1] : */
 
-/* Copyright (c) Brett Hale 2017.
+/* Copyright (c) Brett Hale 2018.
  * distributed under BSD 2-clause license terms. see: mrtab.c */
 
 /******************************************************************************/

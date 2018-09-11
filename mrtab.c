@@ -3,7 +3,7 @@
 /* mrtab : Miller-Rabin test iterations for a random, k-bit probable prime
  * search, satisfying an upper bound for the error probability: p(k, t)
  *
- * Copyright (c) Brett Hale 2017.
+ * Copyright (c) Brett Hale 2018.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions

@@ -2,7 +2,7 @@
 
 /* RBJ.2.L2 : c(s) sequence: */
 
-/* Copyright (c) Brett Hale 2017.
+/* Copyright (c) Brett Hale 2018.
  * distributed under BSD 2-clause license terms. see: mrtab.c */
 
 /******************************************************************************/

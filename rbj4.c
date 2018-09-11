@@ -2,7 +2,7 @@
 
 /* RBJ.4 : exact p(k, 1) values for 2 <= k <= 24 (Monier's result) : */
 
-/* Copyright (c) Brett Hale 2017.
+/* Copyright (c) Brett Hale 2018.
  * distributed under BSD 2-clause license terms. see: mrtab.c */
 
 /******************************************************************************/

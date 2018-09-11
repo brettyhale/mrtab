@@ -3,13 +3,13 @@
 /* prime factorization for (n) in: [2, 2^24 - 1] (with multiplicity).
  * small prime LUT generated using the sptab utility. */
 
-/* Copyright (c) Brett Hale 2017.
+/* Copyright (c) Brett Hale 2018.
  * distributed under BSD 2-clause license terms. see: mrtab.c */
 
 /******************************************************************************/
 
-#ifndef SP_LUT_H
-#define SP_LUT_H
+#ifndef SP_K12_H_
+#define SP_K12_H_
 
 #include <stdint.h>
 
@@ -117,4 +117,4 @@ static inline unsigned int sp_factor (uint32_t p[], uint32_t n)
 
 /******************************************************************************/
 
-#endif /* SP_LUT_H */
+#endif /* SP_K12_H_ */
