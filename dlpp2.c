@@ -2,7 +2,7 @@
 
 /* DLP.4.proposition.2 : test k-bit prime probability bounds: */
 
-/* Copyright (c) Brett Hale 2018.
+/* Copyright (c) Brett Hale 2020.
  * distributed under BSD 2-clause license terms. see: mrtab.c */
 
 /******************************************************************************/

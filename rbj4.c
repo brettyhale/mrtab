@@ -2,16 +2,16 @@
 
 /* RBJ.4 : exact p(k, 1) values for 2 <= k <= 24 (Monier's result) : */
 
-/* Copyright (c) Brett Hale 2018.
+/* Copyright (c) Brett Hale 2020.
  * distributed under BSD 2-clause license terms. see: mrtab.c */
 
 /******************************************************************************/
 
-#include <float.h>
-#include <math.h>
-
 #include <inttypes.h>
 #include <stdio.h>
+
+#include <float.h>
+#include <math.h>
 
 #if defined (QUADMATH)
 #include <quadmath.h>
@@ -42,7 +42,7 @@ static uint32_t sprp_bases (uint32_t n)
 
     /* a return value of (0) indicates that (n) is a prime, therefore
      * S(n) / (n - 1) should not be added to the composite running sum.
-     * for a prime (p) : S(p) / (p - 1) = (1). */
+     * for a prime (p) : S(p) / (p - 1) = (1) */
 
     if ((pn = (uint32_t) sp_factor(pbuf, n)) == 1)
         return (0);
@@ -84,7 +84,7 @@ int main (void)
     double pk[(24) + 1];
 
     /* Burthe [2] mentions 'several hours' on a SPARC I. at this time,
-     * a modest 2.4 GHz Core 2 Duo takes less than (7) seconds. */
+     * a modest 2.66 GHz Core 2 Duo takes less than (6) seconds. */
 
     pk[0] = 1.0, pk[1] = 1.0; /* all fail. */
     pk[2] = 0.0, pk[3] = 0.0; /* all pass. */
@@ -120,7 +120,7 @@ int main (void)
 #if defined (QUADMATH)
 
     /* evaluate with quad precision to show that:
-     * 0 <= (fl{p(k, 1)} - p(k, 1)) / p(k, 1) < 2 * (EPS) */
+     * 0 <= (fp{p(k, 1)} - p(k, 1)) / p(k, 1) < 2 * (EPS) */
 
     __float128 pkq[(24) + 1];
 

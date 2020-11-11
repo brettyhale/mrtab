@@ -3,7 +3,7 @@
 /* prime factorization for (n) in: [2, 2^24 - 1] (with multiplicity).
  * small prime LUT generated using the sptab utility. */
 
-/* Copyright (c) Brett Hale 2018.
+/* Copyright (c) Brett Hale 2020.
  * distributed under BSD 2-clause license terms. see: mrtab.c */
 
 /******************************************************************************/

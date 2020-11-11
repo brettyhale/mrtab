@@ -2,10 +2,13 @@
 
 /* RBJ.2.L2 : c(s) sequence: */
 
-/* Copyright (c) Brett Hale 2018.
+/* Copyright (c) Brett Hale 2020.
  * distributed under BSD 2-clause license terms. see: mrtab.c */
 
 /******************************************************************************/
+
+#include <inttypes.h>
+#include <stdio.h>
 
 #include <float.h>
 #include <math.h>
@@ -14,10 +17,8 @@
 #define M_PI (3.14159265358979323846)
 #endif
 
-#include <stdio.h>
-
 #if defined (QUADMATH)
-#include <quadmath.h>
+#include <quadmath.h> /* provides: M_PIq */
 #endif
 
 
@@ -25,6 +26,9 @@ int main (void)
 {
     unsigned int smax = (30), s; /* {0 .. smax} table: */
     double c[(30) + 1], r, e;
+
+    /* note: not satisifed with this summation. is there
+     * a way to prevent (s) scaling the relative error? */
 
     r = M_PI * M_PI / 6.0, e = 0.0;
     c[0] = nextafter(r, DBL_MAX);
@@ -37,13 +41,13 @@ int main (void)
         y = nextafter(y, DBL_MAX) - e;
         t = r + y; e = (t - r) - y; r = t;
 
-        c[s] = r * (s + 1);
+        c[s] = (s + 1) * r; /* (relative error scaled!) */
     }
 
 #if defined (QUADMATH)
 
     /* evaluate with quad precision to show that:
-     * 0 <= (fl{c(s)} - c(s)) / c(s) < max(s, 1) * (EPS) */
+     * 0 <= (fp{c(s)} - c(s)) / c(s) < max(s, 1) * (EPS) */
 
     __float128 cq[(30) + 1], rq, eq;
 
@@ -58,7 +62,7 @@ int main (void)
         y = y - eq;
         t = rq + y; eq = (t - rq) - y; rq = t;
 
-        cq[s] = rq * (s + 1);
+        cq[s] = (s + 1) * rq;
     }
 
     for (s = 0; s <= smax; s++)

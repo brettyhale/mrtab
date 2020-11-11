@@ -2,7 +2,7 @@
 
 /* demonstration of (2) as an effective witness to compositeness: */
 
-/* Copyright (c) Brett Hale 2018.
+/* Copyright (c) Brett Hale 2020.
  * distributed under BSD 2-clause license terms. see: mrtab.c */
 
 /******************************************************************************/

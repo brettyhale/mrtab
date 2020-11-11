@@ -3,7 +3,7 @@
 /* mrtab : Miller-Rabin test iterations for a random, k-bit probable prime
  * search, satisfying an upper bound for the error probability: p(k, t)
  *
- * Copyright (c) Brett Hale 2018.
+ * Copyright (c) Brett Hale 2020.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -118,8 +118,8 @@ static int dlp_tab (p_kt_fn p_kt)
 {
     unsigned int k, t;
 
-    fprintf(stdout, "lower bounds for -lg(p(k, t))\n\n");
-    /* DLP.table.1 actually lists: floor(-lg(p(k, t))) */
+    fprintf(stdout, "lower bounds for -lb(p(k, t))\n\n");
+    /* DLP.table.1 actually lists: floor(-lb(p(k, t))) */
 
     fprintf(stdout, "k\\t |");
     for (t = 1; t <= 10; t++)
@@ -133,7 +133,7 @@ static int dlp_tab (p_kt_fn p_kt)
     {
         fprintf(stdout, "%3u |", k);
         for (t = 1; t <= 10; t++)
-            fprintf(stdout, " %3u", /* floor(-lg(p(k, t))) : */
+            fprintf(stdout, " %3u", /* floor(-lb(p(k, t))) : */
                     (unsigned int) (- log2((*p_kt)(k, t))));
         fprintf(stdout, "\n");
     }
@@ -248,7 +248,7 @@ static double rbj_kt (unsigned int k, unsigned int t)
     {
         /* (q(M - 2)(M + 1)/2) summation terms evaluated: */
 
-        double p1, rm, r0 = 0.0;
+        double rm, p1, n1 = 0.0;
         unsigned int qi;
 
         /* fractional summation: */
@@ -256,18 +256,18 @@ static double rbj_kt (unsigned int k, unsigned int t)
         {
             /* ensure integral (m) values are exact: */
             rm = ((qi % q) == 0) ? (qi / q) : (rq * qi);
-            r0 += rbj_ktm(rk, rt, rm);
+            n1 += rbj_ktm(rk, rt, rm);
         }
 
-        r0 *= 0.5 * (exp2(rt * rq) - 1.0);
-        r0 += exp2(- (rt * mi + 2.0));
+        n1 *= 0.5 * (exp2(rt * rq) - 1.0);
+        n1 += exp2(- (rt * mi + 2.0));
 
         p1 = 0.71867 / rk;
-        if ((r0 /= (r0 + p1)) < rp) /* new 'M' candidate: */
-            rp = r0;
+        if ((n1 /= (n1 + p1)) < rp) /* new 'M' candidate: */
+            rp = n1;
     }
 
-    return rp; /* p(k, t). */
+    return rp; /* p(k, t) */
 }
 
 
@@ -326,18 +326,18 @@ static double dlp_kt (unsigned int k, unsigned int t)
             ej += (rk - 1.0) / ej;
             mj = exp2((1.0 - rt) * m - ej);
 
-            for (r0 += mj; m < mi; m++) /* {m .. M} */
+            for (r0 += mj; m < mi; m++) /* {m .. M} \ {2} */
                 r0 += (mj *= mt);
         }
 
         r0 *= c / (2.0 * mt);
-        r0 += exp2(- (rt * mi + 2.0));
+        r0 += exp2(- (2.0 + rt * mi));
 
         if ((r0 *= rk / 0.71867) < rp) /* new 'M' candidate: */
             rp = r0;
     }
 
-    return rp; /* p(k, t). */
+    return rp; /* p(k, t) */
 }
 
 
