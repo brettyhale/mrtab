@@ -2,7 +2,7 @@
 
 /* prime64 : deterministic M-R primality test for a 64-bit value. */
 
-/* Copyright (c) Brett Hale 2018.
+/* Copyright (c) Brett Hale 2020.
  * distributed under BSD 2-clause license terms. */
 
 /* note: requires gcc / clang '__int128' extended type. */
