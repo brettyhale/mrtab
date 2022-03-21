@@ -95,9 +95,9 @@ int main (void)
     for (k = 4; k <= kmax; k++)
     {
         uint32_t nmax = (UINT32_C(1) << k), n, sn;
-        double num, den, e0, e1, an, y, t;
+        double num, den, en, ed, an, x, t;
 
-        num = den = 0.0, e0 = e1 = 0.0;
+        num = den = 0.0, en = ed = 0.0; /* 2Sum series: */
 
         for (n = (nmax >> 1) + 1; n < nmax; n += 2)
         {
@@ -106,17 +106,17 @@ int main (void)
                 an = (double) sn / (double) (n - 1);
                 an = nextafter(an, DBL_MAX);
 
-                y = an - e0; t = num + y; e0 = (t - num) - y;
-                num = t; /* Kahan summation for composite(n). */
+                x = num + an; t = x - num;
+                en += num - (x - t) + (an - t); num = x;
             }
             else
                 an = 1.0;
 
-            y = an - e1; t = den + y; e1 = (t - den) - y;
-            den = t; /* Kahan summation for (all) odd(n). */
+            x = den + an; t = x - den;
+            ed += den - (x - t) + (an - t); den = x;
         }
 
-        pk[k] = nextafter(num / den, DBL_MAX);
+        pk[k] = nextafter((num + en) / (den + ed), DBL_MAX);
         fprintf(stdout, "%2u : %.16e\n", k, pk[k]);
     }
 
@@ -134,28 +134,27 @@ int main (void)
     for (k = 4; k <= kmax; k++)
     {
         uint32_t nmax = (UINT32_C(1) << k), n, sn;
-        __float128 num, den, e0, e1, an, y, t;
+        __float128 num, den, en, ed, an, x, t;
 
-        num = den = 0.0, e0 = e1 = 0.0;
+        num = den = 0.0, en = ed = 0.0; /* 2Sum series: */
 
         for (n = (nmax >> 1) + 1; n < nmax; n += 2)
         {
             if ((sn = sprp_bases(n)) != 0)
             {
                 an = (__float128) sn / (__float128) (n - 1);
-                an = nextafterq(an, FLT128_MAX);
 
-                y = an - e0; t = num + y; e0 = (t - num) - y;
-                num = t; /* Kahan summation for composite(n). */
+                x = num + an; t = x - num;
+                en += num - (x - t) + (an - t); num = x;
             }
             else
                 an = 1.0;
 
-            y = an - e1; t = den + y; e1 = (t - den) - y;
-            den = t; /* Kahan summation for (all) odd(n). */
+            x = den + an; t = x - den;
+            ed += den - (x - t) + (an - t); den = x;
         }
 
-        pkq[k] = nextafterq(num / den, FLT128_MAX);
+        pkq[k] = (num + en) / (den + ed);
         quadmath_snprintf(buf, sizeof(buf), "%.35Qe", pkq[k]);
         fprintf(stdout, "%2u : %s\n", k, buf);
     }
